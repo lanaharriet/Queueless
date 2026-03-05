@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Your Token</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f5f5f5;
+text-align:center;
+}
+
+.token-card{
+background:white;
+width:350px;
+margin:auto;
+margin-top:80px;
+padding:25px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+.token-number{
+font-size:32px;
+color:#e74c3c;
+font-weight:bold;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+margin:6px 0;
+}
+
+.total{
+font-weight:bold;
+margin-top:10px;
+}
+
+button{
+margin-top:20px;
+padding:12px 25px;
+font-size:16px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="tokenCard" class="token-card">
+
+<h2>Vincent De Paul Canteen</h2>
+
+<p class="token-number">Token {{ order.token_number }}</p>
+
+<p>Name: {{ order.customer_name }}</p>
+
+<p>Date: {{ order.created_at|date:"d M Y - h:i A" }}</p>
+
+<hr>
+
+{% for item in items %}
+
+<div class="item">
+<span>{{ item.name }} × {{ item.quantity }}</span>
+<span>₹ {{ item.subtotal }}</span>
+</div>
+
+{% endfor %}
+
+<hr>
+
+<p class="total">Total: ₹ {{ total }}</p>
+
+<p>Please show this token on Sunday</p>
+
+</div>
+
+<button onclick="downloadPDF()">Download Token</button>
+
+<script>
+
+async function downloadPDF(){
+
+const { jsPDF } = window.jspdf;
+
+const card = document.getElementById("tokenCard")
+
+html2canvas(card).then(canvas => {
+
+const imgData = canvas.toDataURL("image/png")
+
+const pdf = new jsPDF()
+
+const imgWidth = 190
+const pageHeight = 295
+const imgHeight = canvas.height * imgWidth / canvas.width
+
+pdf.addImage(imgData,'PNG',10,10,imgWidth,imgHeight)
+
+pdf.save("canteen_token.pdf")
+
+})
+
+}
+
+</script>
+
+</body>
+</html>
