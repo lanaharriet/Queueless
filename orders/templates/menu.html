@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vincent de Paul Canteen</title>
 
 <style>
@@ -58,11 +59,11 @@ font-weight:bold;
 
 .menu-container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-width:90%;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+width:92%;
 margin:auto;
-margin-top:40px;
+margin-top:30px;
 }
 
 .card{
@@ -158,6 +159,38 @@ transform:scale(0.97);
 margin-top:40px;
 font-size:13px;
 color:#666;
+}
+
+@media (max-width:600px){
+
+.header{
+padding:18px 10px;
+}
+
+.header h1{
+font-size:22px;
+}
+
+.search-box{
+width:180px;
+}
+
+.card img{
+height:170px;
+}
+
+.qty-btn{
+width:34px;
+height:34px;
+font-size:18px;
+}
+
+.confirm-btn{
+width:90%;
+font-size:18px;
+padding:14px;
+}
+
 }
 
 </style>
