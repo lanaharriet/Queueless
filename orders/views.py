@@ -178,3 +178,43 @@ def dashboard(request):
         "total_orders": total_orders,
         "total_revenue": total_revenue
     })
+
+    from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def kitchen_control(request):
+
+    allowed_users = [
+        "developer",
+        "vdp_leader",
+        "vdp_secretary",
+        "parish_priest"
+    ]
+
+    if request.user.username not in allowed_users:
+        return render(request, "access_denied.html")
+
+    items = Menu.objects.all()
+
+    return render(request, "kitchen_control.html", {"items": items})
+
+
+@login_required
+def toggle_item(request, item_id):
+
+    allowed_users = [
+        "developer",
+        "vdp_leader",
+        "vdp_secretary",
+        "parish_priest"
+    ]
+
+    if request.user.username not in allowed_users:
+        return render(request, "access_denied.html")
+
+    item = Menu.objects.get(id=item_id)
+    item.is_available = not item.is_available
+    item.save()
+
+    return redirect("/kitchen-control")
