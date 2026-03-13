@@ -195,7 +195,10 @@ def kitchen_control(request):
         "parish_priest"
     ]
 
-    if not request.user.is_authenticated:
+@login_required
+def dashboard(request):
+
+    if not request.user.is_staff:
         return render(request, "access_denied.html")
 
     items = Menu.objects.all()
