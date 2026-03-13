@@ -7,6 +7,9 @@ from reportlab.pdfgen import canvas
 
 from .models import Menu, Order, OrderItem
 
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
 
 def menu_page(request):
     items = Menu.objects.filter(is_available=True)
@@ -179,7 +182,7 @@ def dashboard(request):
         "total_revenue": total_revenue
     })
 
-    from django.shortcuts import redirect
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -218,3 +221,15 @@ def toggle_item(request, item_id):
     item.save()
 
     return redirect("/kitchen-control")
+
+def create_admin(request):
+
+    if not User.objects.filter(username="developer").exists():
+        User.objects.create_superuser(
+            username="developer",
+            email="developer@judes.com",
+            password="vdp_judes_dev"
+        )
+        return HttpResponse("Admin user created")
+
+    return HttpResponse("Admin already exists")
