@@ -196,17 +196,6 @@ def kitchen_control(request):
     ]
 
 @login_required
-def dashboard(request):
-
-    if not request.user.is_staff:
-        return render(request, "access_denied.html")
-
-    items = Menu.objects.all()
-
-    return render(request, "dashboard.html", {"items": items})
-
-
-@login_required
 def toggle_item(request, item_id):
 
     allowed_users = [
@@ -225,14 +214,3 @@ def toggle_item(request, item_id):
 
     return redirect("/kitchen-control")
 
-def create_admin(request):
-
-    if not User.objects.filter(username="developer").exists():
-        User.objects.create_superuser(
-            username="developer",
-            email="developer@judes.com",
-            password="vdp_judes_dev"
-        )
-        return HttpResponse("Admin user created")
-
-    return HttpResponse("Admin already exists")

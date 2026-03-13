@@ -10,5 +10,5 @@ urlpatterns = [
     path('dashboard-login/', views.dashboard_login, name='dashboard_login'),
     path("kitchen-control/", views.kitchen_control, name="kitchen_control"),
     path("toggle-item/<int:item_id>/", views.toggle_item, name="toggle_item"),
-    path("create-admin/", views.create_admin),
+    
 ]
