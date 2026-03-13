@@ -203,7 +203,7 @@ def dashboard(request):
 
     items = Menu.objects.all()
 
-    return render(request, "kitchen_control.html", {"items": items})
+    return render(request, "dashboard.html", {"items": items})
 
 
 @login_required
