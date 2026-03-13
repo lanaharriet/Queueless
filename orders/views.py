@@ -190,10 +190,17 @@ def kitchen_control(request):
 
     allowed_users = [
         "developer",
-        "vdp_leader",
-        "vdp_secretary",
-        "parish_priest"
+        "Lawrence",
+        "CaltonDavid",
+        "Priest_judes"
     ]
+
+    if request.user.username not in allowed_users:
+        return render(request, "access_denied.html")
+
+    items = Menu.objects.all()
+
+    return render(request, "kitchen_control.html", {"items": items})
 
 @login_required
 def toggle_item(request, item_id):
