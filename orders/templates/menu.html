@@ -283,7 +283,7 @@ onkeyup="searchMenu()">
 
 <div class="card">
 
-<img src="{% static 'images/' %}{{ item.name|lower }}.jpeg">
+<img src="{% static 'images/'|add:item.name|lower|add:'.jpeg' %}">
 
 <h3>{{ item.name }}</h3>
 
