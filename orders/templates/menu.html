@@ -1,6 +1,6 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vincent de Paul Canteen</title>
@@ -283,7 +283,7 @@ onkeyup="searchMenu()">
 
 <div class="card">
 
-<img src="{{ item.image.url }}">
+<img src="{% static 'images/' %}{{ item.name|lower }}.jpeg">
 
 <h3>{{ item.name }}</h3>
 
