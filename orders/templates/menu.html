@@ -1,4 +1,4 @@
-{% load static %}
+{% load static menu_filters %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -283,11 +283,13 @@ onkeyup="searchMenu()">
 
 <div class="card">
 
-{% with "images/"|add:item.name|lower|add:".jpeg" as img_path %}
-  <img src="{% static img_path %}">
+{% with item.name|to_image as img_file %}
+  {% with "images/"|add:img_file as img_path %}
+    <img src="{% static img_path %}">
+  {% endwith %}
 {% endwith %}
 
-<h3>{{ item.name }}</h3>
+<h3>{{ item.name|tamil_name }} / {{ item.name|to_english }}</h3>
 
 <p class="price">₹ {{ item.price }}</p>
 
