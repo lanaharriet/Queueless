@@ -4,9 +4,9 @@ register = template.Library()
 
 @register.filter
 def to_image(name):
-    # "COFFEE/காபி" → "coffee.jpeg"
+    # "COFFEE/காபி" → "coffee.jpeg" or "placeholder.jpeg" if empty
     english = name.split('/')[0].strip().lower()
-    return english + '.jpeg'
+    return english + '.jpeg' if english else 'placeholder.jpeg'
 
 @register.filter
 def tamil_name(name):
