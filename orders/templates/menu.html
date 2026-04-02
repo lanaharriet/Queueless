@@ -20,6 +20,7 @@ background:linear-gradient(135deg,#d86a1f,#f79a3b);
 color:white;
 padding:25px 10px;
 box-shadow:0 4px 12px rgba(0,0,0,0.18);
+position:relative;
 }
 
 .header h1{
@@ -30,6 +31,33 @@ font-weight:500;
 .subtitle{
 font-size:14px;
 opacity:0.9;
+}
+
+.welcome{
+font-size:16px;
+margin-top:14px;
+opacity:1;
+font-weight:600;
+letter-spacing:0.3px;
+}
+
+.signout-btn{
+position:absolute;
+top:15px;
+right:20px;
+background:rgba(255,255,255,0.2);
+color:white;
+padding:8px 16px;
+border-radius:20px;
+text-decoration:none;
+font-weight:bold;
+font-size:13px;
+border:1.5px solid rgba(255,255,255,0.6);
+transition:background 0.2s;
+}
+
+.signout-btn:hover{
+background:rgba(255,255,255,0.35);
 }
 
 .top-bar{
@@ -144,7 +172,7 @@ border:none;
 border-radius:12px;
 cursor:pointer;
 box-shadow:0 6px 14px rgba(0,0,0,0.18);
-transition:transform 0.1s, box-shadow 0.1s;
+transition:transform 0.1s,box-shadow 0.1s;
 }
 
 .confirm-btn:hover{
@@ -178,6 +206,13 @@ padding:18px 10px;
 font-size:22px;
 }
 
+.signout-btn{
+top:12px;
+right:10px;
+font-size:12px;
+padding:6px 12px;
+}
+
 .search-box{
 width:180px;
 }
@@ -207,38 +242,35 @@ padding:14px;
 function updateCart(){
 let inputs=document.querySelectorAll(".qty-input")
 let total=0
-
 inputs.forEach(input=>{
 total += parseInt(input.value) || 0
 })
-
 document.getElementById("cartCount").innerText = total
 }
 
 function increase(id){
 let input=document.getElementById("qty_"+id)
-input.value = (parseInt(input.value) || 0) + 1
+let current = parseInt(input.value) || 0
+if(current < 20){
+input.value = current + 1
+}
 updateCart()
 }
 
 function decrease(id){
 let input=document.getElementById("qty_"+id)
 let current = parseInt(input.value) || 0
-
-if(current>0){
+if(current > 0){
 input.value = current - 1
 }
-
 updateCart()
 }
 
 function searchMenu(){
 let filter=document.getElementById("search").value.toLowerCase()
 let cards=document.querySelectorAll(".card")
-
 cards.forEach(card=>{
 let title=card.querySelector("h3").innerText.toLowerCase()
-
 if(title.includes(filter)){
 card.style.display=""
 }else{
@@ -254,23 +286,27 @@ card.style.display="none"
 <body>
 
 <div class="header">
-<h1>Vincent De Paul Canteen</h1>
-<div class="subtitle">Pre-order your Sunday breakfast for 29/03/2026</div>
 
-<div class="top-bar">
+  <a href="/accounts/logout/" class="signout-btn">Sign Out</a>
 
-<input 
-type="text"
-id="search"
-class="search-box"
-placeholder="Search food..."
-onkeyup="searchMenu()">
+  <h1>Vincent De Paul Canteen</h1>
+  <div class="subtitle">Pre-order your Sunday breakfast</div>
+  <div class="welcome">
+    👋 Welcome, <strong>{{ request.user.first_name }}</strong>! What would you like today?
+  </div>
 
-<div class="cart">
-🛒 Items: <span id="cartCount">0</span>
-</div>
+  <div class="top-bar">
+    <input
+      type="text"
+      id="search"
+      class="search-box"
+      placeholder="Search food..."
+      onkeyup="searchMenu()">
 
-</div>
+    <div class="cart">
+      🛒 Items: <span id="cartCount">0</span>
+    </div>
+  </div>
 
 </div>
 
@@ -331,7 +367,7 @@ Confirm Order
 </form>
 
 <div class="footer">
-Judes Church Elkhill • Vincent De Paul 
+Judes Church Elkhill • Vincent De Paul
 </div>
 
 </body>
