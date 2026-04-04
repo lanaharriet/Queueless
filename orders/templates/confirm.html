@@ -1,128 +1,172 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Confirm Order</title>
 
 <style>
 
+*{box-sizing:border-box;margin:0;padding:0;}
+
 body{
-font-family:Arial;
-background:#f5f5f5;
-text-align:center;
+font-family:"Segoe UI",sans-serif;
+background:#f0f0f0;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
 }
 
 .container{
 background:white;
-width:400px;
-margin:auto;
-margin-top:80px;
-padding:25px;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+width:100%;
+max-width:400px;
+border-radius:24px;
+overflow:hidden;
+box-shadow:0 20px 60px rgba(0,0,0,0.12);
+}
+
+.top{
+background:linear-gradient(135deg,#d86a1f,#f79a3b);
+padding:24px;
+color:white;
+text-align:center;
+}
+
+.top h2{
+font-size:15px;
+font-weight:400;
+letter-spacing:1px;
+text-transform:uppercase;
+opacity:0.9;
+}
+
+.top p{
+font-size:28px;
+font-weight:700;
+margin-top:6px;
+}
+
+.body{
+padding:24px;
 }
 
 .item{
 display:flex;
 justify-content:space-between;
-margin:8px 0;
+font-size:14px;
+color:#444;
+margin:10px 0;
 }
 
-.total{
-font-size:20px;
-font-weight:bold;
-margin-top:15px;
+.item span:last-child{
+font-weight:500;
+color:#333;
 }
 
-button{
-padding:12px 25px;
-background:#28a745;
+.divider{
+border:none;
+border-top:1px dashed #e0e0e0;
+margin:16px 0;
+}
+
+.total-row{
+display:flex;
+justify-content:space-between;
+font-size:17px;
+font-weight:700;
+color:#d86a1f;
+}
+
+.name-input{
+width:100%;
+padding:12px 16px;
+font-size:15px;
+border:1.5px solid #e0e0e0;
+border-radius:12px;
+margin-top:20px;
+outline:none;
+transition:border 0.2s;
+}
+
+.name-input:focus{
+border-color:#d86a1f;
+}
+
+.place-btn{
+width:100%;
+padding:15px;
+font-size:15px;
+font-weight:600;
+background:linear-gradient(135deg,#2ecc71,#27ae60);
 color:white;
 border:none;
-border-radius:6px;
-font-size:16px;
+border-radius:14px;
 cursor:pointer;
+margin-top:12px;
+letter-spacing:0.5px;
+transition:background 0.2s,transform 0.1s;
 }
 
-input{
-padding:8px;
-width:80%;
-margin-top:10px;
-font-size:16px;
+.place-btn:hover{
+background:#333;
+transform:translateY(-1px);
 }
 
-@media (max-width:600px){
-
-body{
-padding:10px;
+.place-btn:active{
+transform:scale(0.98);
 }
 
-h1{
-font-size:22px;
-}
-
-table{
-width:100%;
-font-size:14px;
-}
-
-button{
-width:100%;
-padding:14px;
-font-size:16px;
-}
-
-input{
-width:100%;
-padding:10px;
-font-size:16px;
-}
-
-.card{
-width:100%;
-}
-
+@media(max-width:420px){
+.top p{font-size:22px;}
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<h2>Confirm Your Order</h2>
+  <div class="top">
+    <h2>Vincent De Paul Canteen</h2>
+    <p>Review Your Order</p>
+  </div>
 
-{% for item in items %}
+  <div class="body">
 
-<div class="item">
-<span>{{ item.name }} × {{ item.quantity }}</span>
-<span>₹ {{ item.subtotal }}</span>
-</div>
+    {% for item in items %}
+    <div class="item">
+      <span>{{ item.name }} × {{ item.quantity }}</span>
+      <span>₹ {{ item.subtotal }}</span>
+    </div>
+    {% endfor %}
 
-{% endfor %}
+    <hr class="divider">
 
-<div class="total">
-Total: ₹ {{ total }}
-</div>
+    <div class="total-row">
+      <span>Total</span>
+      <span>₹ {{ total }}</span>
+    </div>
 
-<form action="/order/" method="POST">
-{% csrf_token %}
+    <form action="/order/" method="POST">
+      {% csrf_token %}
 
-<br>
+      <input
+        class="name-input"
+        type="text"
+        name="customer_name"
+        placeholder="Enter your name"
+        required>
 
-<input type="text" name="customer_name" placeholder="Enter your name" required>
+      <button class="place-btn" type="submit">Place Order →</button>
 
-<br><br>
+    </form>
 
-<button type="submit">Place Final Order</button>
-
-</form>
+  </div>
 
 </div>
 
 </body>
-
 </html>

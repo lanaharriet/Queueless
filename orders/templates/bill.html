@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your Token</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -10,146 +9,209 @@
 
 <style>
 
+*{box-sizing:border-box;margin:0;padding:0;}
+
 body{
-font-family:Arial;
-background:#f5f5f5;
-text-align:center;
+font-family:"Segoe UI",sans-serif;
+background:#f0f0f0;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+padding:30px 16px;
 }
 
 .token-card{
 background:white;
-width:350px;
-margin:auto;
-margin-top:80px;
-padding:25px;
-border-radius:12px;
-box-shadow:0 4px 10px rgba(0,0,0,0.15);
+width:100%;
+max-width:380px;
+border-radius:24px;
+overflow:hidden;
+box-shadow:0 20px 60px rgba(0,0,0,0.12);
 }
 
-.token-number{
-font-size:32px;
-color:#e74c3c;
-font-weight:bold;
+.card-top{
+background:linear-gradient(135deg,#d86a1f,#f79a3b);
+padding:30px 24px;
+color:white;
+text-align:center;
+}
+
+.card-top h2{
+font-size:16px;
+font-weight:400;
+opacity:0.9;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+.token-num{
+font-size:64px;
+font-weight:700;
+line-height:1;
+margin:10px 0 4px;
+}
+
+.token-label{
+font-size:13px;
+opacity:0.75;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+.card-body{
+padding:24px;
+}
+
+.meta{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+color:#999;
+margin-bottom:20px;
+}
+
+.meta span:last-child{
+text-align:right;
+}
+
+.meta strong{
+display:block;
+color:#333;
+font-size:14px;
+margin-top:2px;
+}
+
+.divider{
+border:none;
+border-top:1px dashed #e0e0e0;
+margin:16px 0;
 }
 
 .item{
 display:flex;
 justify-content:space-between;
-margin:6px 0;
+font-size:14px;
+color:#444;
+margin:10px 0;
 }
 
-.total{
-font-weight:bold;
-margin-top:10px;
+.item span:last-child{
+font-weight:500;
+color:#333;
 }
 
-button{
+.total-row{
+display:flex;
+justify-content:space-between;
+font-size:17px;
+font-weight:700;
+color:#d86a1f;
+margin-top:16px;
+}
+
+.notice{
+text-align:center;
+font-size:12px;
+color:#aaa;
 margin-top:20px;
-padding:12px 25px;
-font-size:16px;
-background:#28a745;
+padding-top:16px;
+border-top:1px solid #f0f0f0;
+letter-spacing:0.3px;
+}
+
+.download-btn{
+margin-top:24px;
+width:100%;
+max-width:380px;
+padding:16px;
+font-size:15px;
+font-weight:600;
+background:linear-gradient(135deg,#2ecc71,#27ae60);
 color:white;
 border:none;
-border-radius:6px;
+border-radius:16px;
 cursor:pointer;
+letter-spacing:0.5px;
+
 }
 
-@media (max-width:600px){
-
-body{
-padding:10px;
+.download-btn:hover{
+background:#333;
+transform:translateY(-1px);
 }
 
-h1{
-font-size:22px;
+.download-btn:active{
+transform:scale(0.98);
 }
 
-table{
-width:100%;
-font-size:14px;
-}
-
-button{
-width:100%;
-padding:14px;
-font-size:16px;
-}
-
-input{
-width:100%;
-padding:10px;
-font-size:16px;
-}
-
-.card{
-width:100%;
-}
-
+@media(max-width:420px){
+.token-num{font-size:52px;}
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div id="tokenCard" class="token-card">
 
-<h2>Vincent De Paul Canteen</h2>
+  <div class="card-top">
+    <h2>Vincent De Paul Canteen</h2>
+    <div class="token-num">Token {{ order.token_number }}</div>
+  </div>
 
-<p class="token-number">Token {{ order.token_number }}</p>
+  <div class="card-body">
 
-<p>Name: {{ order.customer_name }}</p>
+    <div class="meta">
+      <span>
+        Name
+        <strong>{{ order.customer_name }}</strong>
+      </span>
+      <span>
+        Date
+        <strong>{{ order.created_at|date:"d M Y - h:i A" }}</strong>
+      </span>
+    </div>
 
-<p>Date: {{ order.created_at|date:"d M Y - h:i A" }}</p>
+    <hr class="divider">
 
-<hr>
+    {% for item in items %}
+    <div class="item">
+      <span>{{ item.name }} × {{ item.quantity }}</span>
+      <span>₹ {{ item.subtotal }}</span>
+    </div>
+    {% endfor %}
 
-{% for item in items %}
+    <div class="total-row">
+      <span>Total</span>
+      <span>₹ {{ total }}</span>
+    </div>
 
-<div class="item">
-<span>{{ item.name }} × {{ item.quantity }}</span>
-<span>₹ {{ item.subtotal }}</span>
+    <div class="notice">
+      Show this token on Sunday to collect your order
+    </div>
+
+  </div>
+
 </div>
 
-{% endfor %}
-
-<hr>
-
-<p class="total">Total: ₹ {{ total }}</p>
-
-<p>Please show this token on Sunday</p>
-
-</div>
-
-<button onclick="downloadPDF()">Download Token</button>
+<button class="download-btn" onclick="downloadPDF()">⬇ Download Token</button>
 
 <script>
-
 async function downloadPDF(){
-
-const { jsPDF } = window.jspdf;
-
-const card = document.getElementById("tokenCard")
-
-html2canvas(card).then(canvas => {
-
-const imgData = canvas.toDataURL("image/png")
-
-const pdf = new jsPDF()
-
-const imgWidth = 190
-const pageHeight = 295
-const imgHeight = canvas.height * imgWidth / canvas.width
-
-pdf.addImage(imgData,'PNG',10,10,imgWidth,imgHeight)
-
-pdf.save("canteen_token.pdf")
-
-})
-
+  const { jsPDF } = window.jspdf
+  const card = document.getElementById("tokenCard")
+  html2canvas(card, {scale:2}).then(canvas => {
+    const imgData = canvas.toDataURL("image/png")
+    const pdf = new jsPDF()
+    const imgWidth = 190
+    const imgHeight = canvas.height * imgWidth / canvas.width
+    pdf.addImage(imgData,'PNG',10,10,imgWidth,imgHeight)
+    pdf.save("token_{{ order.token_number }}.pdf")
+  })
 }
-
 </script>
 
 </body>
