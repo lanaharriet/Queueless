@@ -18,6 +18,7 @@ display:flex;
 justify-content:center;
 gap:40px;
 margin-top:40px;
+flex-wrap:wrap;
 }
 
 .card{
@@ -50,6 +51,27 @@ border-bottom:1px solid #ddd;
 th{
 background:#2c7be5;
 color:white;
+}
+
+.reset-btn{
+margin-top:40px;
+padding:14px 30px;
+font-size:16px;
+background:linear-gradient(135deg,#e74c3c,#c0392b);
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+transition:transform 0.1s;
+}
+
+.reset-btn:hover{
+transform:translateY(-2px);
+}
+
+.reset-btn:active{
+transform:scale(0.97);
 }
 
 @media (max-width:600px){
@@ -126,6 +148,11 @@ width:100%;
 {% endfor %}
 
 </table>
+
+<form action="/reset-orders/" method="POST" onsubmit="return confirm('Are you sure? This will delete ALL orders and reset token numbers to 1. This cannot be undone!')">
+  {% csrf_token %}
+  <button class="reset-btn" type="submit">🔄 Reset All Orders</button>
+</form>
 
 </body>
 </html>

@@ -207,3 +207,15 @@ def toggle_item(request, item_id):
     item.save()
 
     return redirect("/kitchen-control/")
+
+@login_required(login_url='/dashboard-login/')
+def reset_orders(request):
+    if request.user.username not in ALLOWED_USERS:
+        return render(request, "access_denied.html")
+
+    if request.method == "POST":
+        from django.db import connection
+        with connection.cursor() as cursor:
+            cursor.execute("TRUNCATE TABLE orders_order RESTART IDENTITY CASCADE")
+
+    return redirect("/dashboard/")

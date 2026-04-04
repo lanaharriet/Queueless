@@ -78,6 +78,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_SIGNUP_FIELDS = ['email*']
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+ADMIN_URL = 'admin/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
