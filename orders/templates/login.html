@@ -122,7 +122,7 @@ transform:scale(0.98);
     <h2>Dashboard Login</h2>
     <p>Enter your credentials to continue</p>
 
-    <form method="POST">
+    <form method="POST" action="/dashboard-login/">
       {% csrf_token %}
 
       <input type="text" name="username" placeholder="Username" required>
