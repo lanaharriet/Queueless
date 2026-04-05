@@ -1,66 +1,138 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Login</title>
 
 <style>
 
+*{box-sizing:border-box;margin:0;padding:0;}
+
 body{
-font-family:Arial;
-background:#f5f5f5;
+font-family:"Segoe UI",sans-serif;
+background:linear-gradient(135deg,#f5f7fa,#e4ecf7);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+.header{
+background:linear-gradient(135deg,#d86a1f,#f79a3b);
+color:white;
+padding:25px 10px;
 text-align:center;
+box-shadow:0 4px 12px rgba(0,0,0,0.18);
+}
+
+.header h1{
+font-size:22px;
+font-weight:500;
+}
+
+.header p{
+font-size:13px;
+opacity:0.9;
+margin-top:4px;
+}
+
+.container{
+flex:1;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:40px 20px;
 }
 
 .login-box{
 background:white;
-width:300px;
-margin:auto;
-margin-top:120px;
-padding:25px;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+width:100%;
+max-width:380px;
+border-radius:24px;
+overflow:hidden;
+box-shadow:0 20px 60px rgba(0,0,0,0.12);
+padding:36px 32px;
+text-align:center;
+}
+
+.login-box h2{
+font-size:20px;
+color:#333;
+margin-bottom:8px;
+}
+
+.login-box p{
+font-size:13px;
+color:#999;
+margin-bottom:28px;
 }
 
 input{
-padding:10px;
-width:80%;
-margin:10px 0;
+width:100%;
+padding:13px 16px;
+font-size:15px;
+border:1.5px solid #e0e0e0;
+border-radius:12px;
+margin-bottom:14px;
+outline:none;
+transition:border 0.2s;
+}
+
+input:focus{
+border-color:#d86a1f;
 }
 
 button{
-padding:10px 20px;
-background:#2c7be5;
+width:100%;
+padding:14px;
+font-size:15px;
+font-weight:600;
+background:linear-gradient(135deg,#d86a1f,#f79a3b);
 color:white;
 border:none;
-border-radius:6px;
+border-radius:12px;
 cursor:pointer;
+letter-spacing:0.3px;
+box-shadow:0 4px 14px rgba(216,106,31,0.3);
+transition:transform 0.1s,box-shadow 0.1s;
+margin-top:6px;
+}
+
+button:hover{
+transform:translateY(-1px);
+box-shadow:0 6px 18px rgba(216,106,31,0.4);
+}
+
+button:active{
+transform:scale(0.98);
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="login-box">
+<div class="header">
+  <h1>Vincent De Paul Canteen</h1>
+  <p>Staff Access Only</p>
+</div>
 
-<h2>Dashboard Login</h2>
+<div class="container">
+  <div class="login-box">
 
-<form method="POST">
-{% csrf_token %}
+    <h2>Dashboard Login</h2>
+    <p>Enter your credentials to continue</p>
 
-<input type="text" name="username" placeholder="Username" required>
+    <form method="POST">
+      {% csrf_token %}
 
-<input type="password" name="password" placeholder="Password" required>
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
 
-<br>
+      <button type="submit">Login</button>
 
-<button type="submit">Login</button>
+    </form>
 
-</form>
-
+  </div>
 </div>
 
 </body>
